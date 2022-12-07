@@ -63,6 +63,31 @@ public:
         }
     }
     
+    int removeBottom(){
+        cout << "removing" <<endl;
+        if(size()==0){
+            return 0;
+        }
+        Node* currentNode = head;
+        while(currentNode->next->next!=NULL){
+            currentNode = currentNode->next;
+        }
+        currentNode->next = NULL;
+        return 0;
+    }
+    
+    void removeAt(int index){
+        // add conditions for removing the 1st element and last element
+        Node* currentNode = head;
+        int nodeCount = 0;
+        while(nodeCount != index-1){
+            nodeCount++;
+            currentNode = currentNode->next;
+        }
+        currentNode->next = currentNode->next->next;
+        currentNode->next->next = NULL;
+    }
+    
     void printAll(){
         Node* currentNode = head;
         cout << "print data starts" << endl;
@@ -110,9 +135,11 @@ int main(int argc, const char * argv[]) {
     LinkList1->addAtEnd(55); // adds node at tail
     LinkList1->addAtTop(99);  // adds node at top
     LinkList1->addAt(77,2); // adds value aat the given index
-    int lastNode = LinkList1->endNodeVal();  // returns node value at tail
-    LinkList1->removeTop();
+//    LinkList1->removeTop(); // removes value from top
+    LinkList1->removeBottom(); //removess value from tail
     int topNodeVal = LinkList1->headNodeVal(); // returns node value at head
+    int lastNode = LinkList1->endNodeVal();  // returns node value at tail
+    LinkList1->removeAt(2); // removes node from th egiven index; (0 based index)
     LinkList1->printAll(); // prints all node values
     
     cout << "lastNode val : " << lastNode << endl;
