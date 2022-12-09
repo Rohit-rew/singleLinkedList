@@ -39,9 +39,16 @@ public:
     }
     
     int addAt(int val , int index){
+        
+        if(index==0){
+            return addAtTop(val);
+        }else if (index == size()){
+            return addAtEnd(val);
+        }
+        
         Node* NewNode = new Node;
         NewNode->data = val;
-        
+    
         Node* currentNode = head;
         int nodeNum = 0;
         while (nodeNum != index-1 ) {
@@ -58,13 +65,13 @@ public:
         if(size()==0){
             return 0;
         }else{
+            int removedVal = head->data;
             head = head->next;
-            return 0;
+            return removedVal;
         }
     }
     
     int removeBottom(){
-        cout << "removing" <<endl;
         if(size()==0){
             return 0;
         }
@@ -72,20 +79,29 @@ public:
         while(currentNode->next->next!=NULL){
             currentNode = currentNode->next;
         }
+        int removedVal = currentNode->data;
         currentNode->next = NULL;
-        return 0;
+        return removedVal;
     }
     
-    void removeAt(int index){
-        // add conditions for removing the 1st element and last element
+    int removeAt(int index){
+        //conditions for remmoving first and last Node.
+        if(index==0){
+            return removeTop();
+        }else if(index==size()){
+            return removeBottom();
+        }
+    
         Node* currentNode = head;
         int nodeCount = 0;
         while(nodeCount != index-1){
             nodeCount++;
             currentNode = currentNode->next;
         }
+        int removedVal = currentNode->next->data;
         currentNode->next = currentNode->next->next;
         currentNode->next->next = NULL;
+        return removedVal;
     }
     
     void printAll(){
@@ -139,7 +155,7 @@ int main(int argc, const char * argv[]) {
     LinkList1->removeBottom(); //removess value from tail
     int topNodeVal = LinkList1->headNodeVal(); // returns node value at head
     int lastNode = LinkList1->endNodeVal();  // returns node value at tail
-    LinkList1->removeAt(2); // removes node from th egiven index; (0 based index)
+    LinkList1->removeAt(2); // removes node from the given index; (0 based index)
     LinkList1->printAll(); // prints all node values
     
     cout << "lastNode val : " << lastNode << endl;
